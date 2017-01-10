@@ -1,3 +1,4 @@
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const webpackValidator = require('webpack-validator')
 const {resolve} = require('path')
 const {getIfUtils} = require('webpack-config-utils')
@@ -16,7 +17,14 @@ module.exports = env => {
     devtool: ifProd('source-map', 'eval'),
     module: {
       loaders: [
-        { test: /\.js$/, loaders: ['babel-loader'], exclude: /node_modules/ }
+        { test: /\.js$/, loaders: ['babel-loader'], exclude: /node_modules/ },
+        {
+          test: /\.css$/,
+          loader: ExtractTextPlugin.extract({
+            fallbackLoader: 'style',
+            loader: 'css'
+          })
+        }
       ]
     }
   })
