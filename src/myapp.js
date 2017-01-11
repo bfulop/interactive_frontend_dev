@@ -1,10 +1,20 @@
 import Inferno from 'inferno'
 import createElement from 'inferno-create-element'
-import acomponent from './acomponent'
+import Component from 'inferno-component'
+// import acomponent from './acomponent'
+// import { styles } from './style.css'
+import styles from './style.css'
+console.log("ssss", styles);
+class MyComponent extends Component {
+  render() {
+    return <div className={styles.red}>Hello worlddd</div>;
+  }
+}
+
 
 function runapp() {
   Inferno.render(
-    acomponent(), document.getElementById('inferno')
+    <MyComponent />, document.getElementById('inferno')
   )
 }
 
