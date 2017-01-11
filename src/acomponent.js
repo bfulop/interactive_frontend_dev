@@ -1,17 +1,28 @@
-import Inferno from 'inferno'
 import createElement from 'inferno-create-element'
-import Component from 'inferno-component';
-import myapp from './style.css'
-import { red } from './style.css';
 
 var message = 'subcomponent'
 
-console.log("sssssss", red)
-
-class MyComponent extends Component {
-  render() {
-    return <div>Hello world</div>;
-  }
+function MyComponent(props) {
+  return createElement('div', null, [
+    message,
+    createElement('h5', null, 'myworld'),
+    props.headelem()
+  ])
 }
 
-export default MyComponent
+function MyOtherComponent(props) {
+  return (
+    <div>Hello
+      <h1>World12345</h1>
+      <h3>{props.message}</h3>
+      <p>
+        {props.children}
+      </p>
+      {props.headelem()}
+
+    </div>
+  )
+  // return <div className={styles.red}>Hello worlddd</div>;
+}
+
+export default MyOtherComponent

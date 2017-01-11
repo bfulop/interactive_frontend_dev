@@ -1,21 +1,27 @@
 import Inferno from 'inferno'
 import createElement from 'inferno-create-element'
-import Component from 'inferno-component'
-// import acomponent from './acomponent'
-// import { styles } from './style.css'
 import styles from './style.css'
-console.log("ssss", styles);
-class MyComponent extends Component {
-  render() {
-    return <div className={styles.red}>Hello worlddd</div>;
-  }
+import Subcomponent from './acomponent'
+
+function MyComponent (props) {
+  return createElement('div', { className: styles.red }, 'functional component')
+  // return <div className={styles.red}>Hello worlddd</div>;
 }
 
+let message = 'Hello worldtt'
 
-function runapp() {
+function runapp () {
+  console.log('sun')
   Inferno.render(
-    <MyComponent />, document.getElementById('inferno')
+    <Subcomponent message={message} headelem={MyComponent} >
+      <h1>My component</h1>
+    </Subcomponent>
+    ,
+    document.getElementById('inferno')
   )
+  // Inferno.render(
+  //   <subcomponent />, document.getElementById('inferno')
+  // )
 }
 
 // this is only relevant when using `hot` mode with webpack

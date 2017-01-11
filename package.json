@@ -30,7 +30,7 @@
     "prebuild": "rimraf dist",
     "build": "webpack --env.prod -p",
     "prebuild:dev": "rimraf dist",
-    "build:dev": "webpack --env.dev",
+    "build:dev": "webpack --env.dev -s",
     "dev": "webpack-dev-server --env.dev --hot",
     "debug": "node-nightly --inspect --debug-brk node_modules/.bin/webpack --env.debug",
     "debug:dev": "npm run debug -- --env.dev",
