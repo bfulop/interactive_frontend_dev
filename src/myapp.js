@@ -3,6 +3,10 @@ import createElement from 'inferno-create-element'
 import styles from './style.css'
 import Subcomponent from './acomponent'
 
+// routing modules
+// import { Router, Route } from 'inferno-router'
+// import createBrowserHistory from 'history/createBrowserHistory'
+
 function MyComponent (props) {
   return createElement('div', { className: styles.red }, 'functional component')
   // return <div className={styles.red}>Hello worlddd</div>;
@@ -10,19 +14,19 @@ function MyComponent (props) {
 
 let message = 'Hello worldtt'
 
-function runapp () {
-  console.log('sun')
-  Inferno.render(
-    <Subcomponent message={message} headelem={MyComponent} >
-      <h1>My component</h1>
-    </Subcomponent>
-    ,
-    document.getElementById('inferno')
-  )
-  // Inferno.render(
-  //   <subcomponent />, document.getElementById('inferno')
-  // )
-}
+// function runapp () {
+console.log('sun')
+Inferno.render(
+  <Subcomponent message={message} headelem={MyComponent} >
+    <h1>My component</h1>
+  </Subcomponent>
+  ,
+  document.getElementById('inferno')
+)
+// Inferno.render(
+//   <subcomponent />, document.getElementById('inferno')
+// )
+// }
 
 // this is only relevant when using `hot` mode with webpack
 // special thanks to Eric Clemmons: https://github.com/ericclemmons/webpack-hot-server-example
@@ -33,13 +37,10 @@ if (module.hot) {
   })
   if (reloading) {
     console.log('🔁  HMR Reloading.')
-    runapp()
   } else {
     console.info('✅  HMR Enabled.')
-    runapp()
   }
 } else {
   console.info('❌  HMR Not Supported.')
-  runapp()
 }
 

@@ -13,7 +13,7 @@ function MyComponent(props) {
 function MyOtherComponent(props) {
   return (
     <div>Hello
-      <h1>World12345</h1>
+      <h1>World12</h1>
       <h3>{props.message}</h3>
       <p>
         {props.children}
