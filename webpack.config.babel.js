@@ -20,6 +20,19 @@ module.exports = env => {
         { test: /\.js$/, loaders: ['babel-loader'], exclude: /node_modules/ },
         { test: /\.css$/, loader: 'style-loader!css-loader?modules' }
       ]
+    },
+    devServer: {
+      publicPath: '/dist/',
+      historyApiFallback: true,
+      hot: true,
+      inline: true,
+      proxy: {
+        '/': {
+          bypass: function (req, res, proxyOptions) {
+            return '/public/index.html'
+          }
+        }
+      }
     }
   })
   if (env.debug) {

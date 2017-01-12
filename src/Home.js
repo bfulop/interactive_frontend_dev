@@ -1,9 +1,12 @@
 import Inferno from 'inferno'
 
-function HomeWrapper({children}) {
+const runat = new Date().toLocaleString()
+
+function HomeWrapper ({children}) {
   return (
     <div>
-      <h1>Home</h1>
+      <h1>Homes11</h1>
+      <h3>{runat}</h3>
       {children}
     </div>
   )
