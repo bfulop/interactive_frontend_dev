@@ -1,9 +1,29 @@
 import Inferno from 'inferno'
+import Navigo from 'navigo'
 
 import Button from './components/button'
-import Routing from './Routing'
+import Title from './components/title'
 
-Inferno.render(Routing, document.getElementById('inferno'))
+// import Routing from './ReactRouter'
+
+var router = new Navigo(null, false)
+
+var myglobal = 'aaaaaaaa'
+
+router
+  .on(function () {
+    // show home page here
+    Inferno.render(<Button router={router} />, document.getElementById('inferno'))
+  })
+  .resolve()
+
+router
+  .on({
+    '/title': function () {
+      Inferno.render(<Title />, document.getElementById('inferno'))
+    }
+  })
+  .resolve()
 
 // this is only relevant when using `hot` mode with webpack
 // special thanks to Eric Clemmons: https://github.com/ericclemmons/webpack-hot-server-example

@@ -1,9 +1,13 @@
 import Inferno from 'inferno'
 
-function button ({children}) {
+function button (props) {
+  function gotolink () {
+    props.router.navigate('/title')
+  }
   return (
     <div>
-      <h1>a button www</h1>
+      <h1 onClick={gotolink}>a button fsss</h1>
+
     </div>
   )
 }
