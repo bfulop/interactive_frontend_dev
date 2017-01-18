@@ -10,7 +10,8 @@
     "inferno": "^1.1.1",
     "inferno-component": "^1.1.2",
     "inferno-create-element": "^1.1.1",
-    "inferno-router": "^1.1.2"
+    "myro": "^0.6.3-alpha.0",
+    "ramda": "^0.23.0"
   },
   "devDependencies": {
     "babel-core": "^6.21.0",
