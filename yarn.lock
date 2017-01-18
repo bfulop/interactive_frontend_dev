@@ -1890,25 +1890,17 @@ indexof@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/indexof/-/indexof-0.0.1.tgz#82dc336d232b9062179d05ab3293a66059fd435d"
 
-inferno-component@1.1.2, inferno-component@^1.1.2:
+inferno-component@^1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/inferno-component/-/inferno-component-1.1.2.tgz#e9ab1661a3e5731f5f40c1dbd96ad21d2083537e"
   dependencies:
     inferno "1.1.2"
 
-inferno-create-element@1.1.2, inferno-create-element@^1.1.1:
+inferno-create-element@^1.1.1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/inferno-create-element/-/inferno-create-element-1.1.2.tgz#d7a24cf82813c9581f8d7ffda5cf0ba62e5290fd"
   dependencies:
     inferno "1.1.2"
-
-inferno-router@^1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/inferno-router/-/inferno-router-1.1.2.tgz#5923f03f692af6c9851f13ff1651d20481039293"
-  dependencies:
-    inferno "1.1.2"
-    inferno-component "1.1.2"
-    inferno-create-element "1.1.2"
 
 inferno-vnode-flags@^1.0.7:
   version "1.1.2"
@@ -2262,7 +2254,7 @@ lodash@4.11.1:
   version "4.11.1"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.11.1.tgz#a32106eb8e2ec8e82c241611414773c9df15f8bc"
 
-lodash@^4.14.0, lodash@^4.17.2, lodash@^4.2.0:
+lodash@^4.14.0, lodash@^4.17.2, lodash@^4.2.0, lodash@^4.6.1:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
@@ -2390,6 +2382,12 @@ ms@0.7.1:
 ms@0.7.2:
   version "0.7.2"
   resolved "https://registry.yarnpkg.com/ms/-/ms-0.7.2.tgz#ae25cf2512b3885a1d95d7f037868d8431124765"
+
+myro@^0.6.3-alpha.0:
+  version "0.6.3-alpha.0"
+  resolved "https://registry.yarnpkg.com/myro/-/myro-0.6.3-alpha.0.tgz#27d11c187c7c996d25a5fee5456ed6b9efdb10f7"
+  dependencies:
+    lodash "^4.6.1"
 
 nan@^2.3.0:
   version "2.5.0"
@@ -3001,6 +2999,10 @@ querystring@0.2.0:
 querystringify@0.0.x:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/querystringify/-/querystringify-0.0.4.tgz#0cf7f84f9463ff0ae51c4c4b142d95be37724d9c"
+
+ramda@^0.23.0:
+  version "0.23.0"
+  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.23.0.tgz#ccd13fff73497a93974e3e86327bfd87bd6e8e2b"
 
 randomatic@^1.1.3:
   version "1.1.6"
