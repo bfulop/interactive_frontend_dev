@@ -8,7 +8,7 @@ const route = myro({
     name: 'components',
     props: COMPONENTS_LIST_ROUTE,
     routes: {
-      '/:id': {
+      '/:name': {
         name: 'component',
         props: COMPONENT_DISPLAY_ROUTE
       }

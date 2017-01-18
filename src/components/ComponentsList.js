@@ -10,9 +10,16 @@ export default function (dispatch, {error, components}) {
       <div>
         {error ? <span>Error. Not Found.</span> :
         components ?
-          <div>{R.map(({component, defaults}) =>
-            component(dispatch, defaults),
-            components)}
+          <div>
+            {R.map(function ({name, component, defaults}) {
+              return (
+                <div>
+                  <h3 onClick={dispatch(Action.ShowComponent(name))}>{name}</h3>
+                  {component(dispatch, defaults)}
+                </div>
+              )
+            }, components)
+            }
           </div> :
           <p>Loading.</p>}
       </div>

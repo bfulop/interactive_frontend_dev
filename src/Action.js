@@ -16,10 +16,10 @@ const Action = {
     components: components || state.users,
     error: !components || !components.length
   }, []],
-  ShowComponent: id => state => [
+  ShowComponent: name => state => [
     state,
     [Navigation.changeLocation(
-     Action.OnLocationChange, routes.components.component({id}))]
+     Action.OnLocationChange, routes.components.component({name}))]
   ],
   ShowComponents: state => [
     state,

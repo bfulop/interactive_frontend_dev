@@ -5,7 +5,6 @@ import Title from './components/Title'
 const getComponents = () => {
   const components = [
     {
-      'id': 1,
       'name': 'button',
       'component': Button,
       'defaults': {
@@ -15,7 +14,6 @@ const getComponents = () => {
       }
     },
     {
-      'id': 2,
       'name': 'title',
       'component': Title,
       'defaults': {

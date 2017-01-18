@@ -1,6 +1,7 @@
 import Inferno from 'inferno'
 import R from 'ramda'
 import List from './ComponentsList'
+import ComponentPresent from './ComponentPresent'
 import {loadComponents} from '../Action'
 import {
   COMPONENT_DISPLAY_ROUTE,
@@ -9,21 +10,27 @@ import {
 
 const init = model => [{...model, error: false}, [loadComponents]]
 
-const getComponent = (id, users) =>
-  ({user: R.find(R.propEq('id', parseInt(id)), users)})
+function getComponent (name, components) {
+  console.log('components', components)
+  return { component: R.find(R.propEq('name', name), components) }
+};
+
+function getRouteComponent (state) {
+  console.log('state', R.prop('components', state))
+  return getComponent(R.path(['route', 'params', 'name'], state), R.prop('components', state))
+}
 
 const isRoute = (model, route) =>
   R.equals(R.path(['route', 'props'], model), route)
 
 const NotFound = () => <div>Not Found.</div>
-const Detail = () => <div>Detail...</div>
 
 const view = (dispatch, state) => {
   if (!R.props('route', state)) return NotFound()
   return (
     <div>
       {isRoute(state, COMPONENT_DISPLAY_ROUTE) &&
-        Detail(dispatch, getComponent(R.path(['route', 'params', 'id'], state), R.prop('components', state)))}
+        ComponentPresent(dispatch, getRouteComponent(state))}
       {isRoute(state, COMPONENTS_LIST_ROUTE) && List(dispatch, state)}
     </div>
   )
