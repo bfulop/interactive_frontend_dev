@@ -3,11 +3,12 @@ import createElement from 'inferno-create-element'
 import R from 'ramda'
 import Action from '../Action'
 
-export default (dispatch, {error, components}) =>
-  <div>
-    <h3>Components List</h3>
+export default function (dispatch, {error, components}) {
+  return (
     <div>
-      {error ? <span>Error. Not Found.</span> :
+      <h3>Components List</h3>
+      <div>
+        {error ? <span>Error. Not Found.</span> :
         components ?
           <div>{R.map(({id, name}) =>
             <div key={id}>{name}
@@ -15,5 +16,7 @@ export default (dispatch, {error, components}) =>
             components)}
           </div> :
           <p>Loading.</p>}
+      </div>
     </div>
-  </div>
+  )
+}

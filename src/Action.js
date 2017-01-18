@@ -11,10 +11,10 @@ export const loadComponents = () => {
 
 const Action = {
   LoadComponents: state => [{...state, error: false}, [loadComponents]],
-  OnLoadComponents: users => state => [{
+  OnLoadComponents: components => state => [{
     ...state,
-    users: users || state.users,
-    error: !users || !users.length
+    components: components || state.users,
+    error: !components || !components.length
   }, []],
   ShowComponent: id => state => [
     state,
