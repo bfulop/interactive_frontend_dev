@@ -1,15 +1,28 @@
+// import components
+import Button from './components/Button'
+import Title from './components/Title'
+
 const getComponents = () => {
-  const components = [{
-    'id': 1,
-    'name': 'button'
-  },
+  const components = [
     {
-      'id': 2,
-      'name': 'title'
+      'id': 1,
+      'name': 'button',
+      'component': Button,
+      'defaults': {
+        'texts': {
+          'text': 'button component'
+        }
+      }
     },
     {
-      'id': 3,
-      'name': 'header'
+      'id': 2,
+      'name': 'title',
+      'component': Title,
+      'defaults': {
+        'texts': {
+          'text': 'title component'
+        }
+      }
     }
   ]
 

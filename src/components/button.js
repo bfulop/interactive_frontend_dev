@@ -1,9 +1,9 @@
 import Inferno from 'inferno'
 
-function button ({children}) {
+function button (dispatch, {texts, children}) {
   return (
     <div>
-      <h1>a button www</h1>
+      <h1>{texts.text}</h1>
     </div>
   )
 }

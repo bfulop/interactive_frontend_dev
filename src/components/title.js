@@ -1,10 +1,9 @@
 import Inferno from 'inferno'
 
-function title ({children}) {
+function title (dispatch, {texts, children}) {
   return (
     <div>
-      <h1>Title</h1>
-      {children}
+      <h1>{texts.text}</h1>
     </div>
   )
 }
