@@ -1,25 +1,21 @@
-var wallabyWebpack = require('wallaby-webpack')
-var webpackPostprocessor = wallabyWebpack({})
-
 module.exports = function (wallaby) {
   return {
 
     files: [
-      {pattern: 'node_modules/inferno/inferno.js', instrument: false, load: false, ignore: true},
-      {pattern: 'node_modules/inferno-test-utils/inferno-test-utils.js', instrument: false, load: false},
-      {pattern: 'node_modules/chai/chai.js', instrument: false},
+      {pattern: 'node_modules/inferno/dist/inferno.js', instrument: false},
+      // {pattern: 'node_modules/inferno-test-utils/inferno-test-utils.js', instrument: false, load: false},
 
-     {pattern: 'src/components/button.js', load: false}
+      'src/TestComponent.js'
     ],
 
     tests: [
-      {pattern: 'test/**/*-spec.jsx', load: false}
+      {pattern: 'test/**/*-spec.jsx'}
     ],
 
     compilers: {
       '**/*.js': wallaby.compilers.babel({
         presets: ['es2015', 'es2016', 'stage-2'],
-        plugins: 'inferno'
+        plugins: ['inferno']
       })
     },
 
@@ -29,14 +25,7 @@ module.exports = function (wallaby) {
 
     // debug: true,
 
-    testFramework: 'mocha',
-
-    postprocessor: webpackPostprocessor,
-
-    setup: function () {
-      window.expect = chai.expect
-      window.__moduleBundler.loadTests()
-    }
+    testFramework: 'mocha'
 
   }
 }
