@@ -8,13 +8,17 @@ var expect = chai.expect
 // import InfernoTestUtils from 'inferno-test-utils'
 
 describe('handle the Animations', function () {
-  var subject, container, instance
+  var subject, container, instance, position
 
   before(function () {
     container = document.createElement('div')
     document.body.appendChild(container)
     instance = Inferno.render(button(), container)
     // var output = shallowRender(Inferno.createElement('div', { className: 'test' }, "I'm a child!"))
+    var renderedelem = container.querySelector('div')
+    var position = renderedelem.getBoundingClientRect()
+    var mybot = position.bottom
+    mybot
   })
 
   describe('Follow button', function () {
