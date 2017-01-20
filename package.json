@@ -27,6 +27,7 @@
     "extract-text-webpack-plugin": "beta",
     "inferno-test-utils": "^1.2.1",
     "rimraf": "^2.5.4",
+    "standard": "^8.6.0",
     "style-loader": "^0.13.1",
     "wallaby-webpack": "^0.0.31",
     "webpack": "beta",
