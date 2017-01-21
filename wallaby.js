@@ -7,6 +7,7 @@ module.exports = function (wallaby) {
     files: [
       {pattern: 'node_modules/chai/chai.js', instrument: false},
       {pattern: 'node_modules/inferno/dist/inferno.js', instrument: false},
+      // {pattern: 'node_modules/aphrodite/dist/aphrodite.js', instrument: false},
       // {pattern: 'node_modules/inferno-test-utils/inferno-test-utils.js', instrument: false, load: false},
 
       {pattern: 'src/TestComponent.js', load: false}

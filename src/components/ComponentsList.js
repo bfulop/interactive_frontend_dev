@@ -6,6 +6,7 @@ import Action from '../Action'
 export default function (dispatch, {error, components}) {
   return (
     <div>
+      <style data-aphrodite />
       <h3>Components List</h3>
       <div>
         {error ? <span>Error. Not Found.</span> :
