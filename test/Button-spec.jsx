@@ -37,11 +37,20 @@ describe('handle the Animations', function () {
 
     var dimensions = renderedelem.getBoundingClientRect().width
     dimensions
+
+    beforeEach(function (done) {
+      window.resizeToAsync(1000, 1000, done)
+    })
   })
 
   describe('Testing wallaby', function () {
     it('report if test fails', function () {
       expect(addnumbers(1, 1)).to.eql(2)
+    })
+
+    it('size test', function () {
+      var windowWidth = window.innerWidth
+      windowWidth
     })
   })
 })

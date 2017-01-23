@@ -35,6 +35,17 @@ module.exports = function (wallaby) {
     postprocessor: webpackPostprocessor,
 
     setup: function () {
+      // or whatever name you like
+      window.resizeToAsync = function (width, height, done) {
+        var ipc = require('electron').ipcRenderer
+        ipc.send('resizeWindow',
+          {
+            pageId: window.location.href[window.location.href.lastIndexOf('.') - 1],
+            width: width,
+            height: height
+          })
+        ipc.once('resizeWindow', done)
+      }
       window.__moduleBundler.loadTests()
     }
 
