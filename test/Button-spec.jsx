@@ -47,10 +47,5 @@ describe('handle the Animations', function () {
     it('report if test fails', function () {
       expect(addnumbers(1, 1)).to.eql(2)
     })
-
-    it('size test', function () {
-      var windowWidth = window.innerWidth
-      windowWidth
-    })
   })
 })
