@@ -34,6 +34,8 @@ module.exports = function (wallaby) {
     testFramework: 'mocha',
 
     setup: function (wallaby) {
+      if (global.wdioclient) return
+      // console.log('wdio', global.wdioclient)
       wallaby.delayStart()
       var webdriverio = require('webdriverio')
       var options = { desiredCapabilities: { browserName: 'firefox' } }
@@ -49,7 +51,7 @@ module.exports = function (wallaby) {
     },
 
     teardown: function (wallaby) {
-      global.wdioclient.end()
+      // global.wdioclient.end()
     }
 
     // postprocessor: webpackPostprocessor

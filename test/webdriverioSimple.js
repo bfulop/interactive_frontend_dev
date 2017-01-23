@@ -10,4 +10,7 @@ describe('my webdriverio tests', function () {
   it('can get the title', function () {
     return expect(client.getTitle()).to.eventually.eql('DuckDuckGo')
   })
+  // it('can add two numbers together', function () {
+  //   return expect(addnumbers(2, 3)).to.eql(4)
+  // })
 })
