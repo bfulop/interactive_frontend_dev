@@ -42,9 +42,9 @@ module.exports = function (wallaby) {
       var wdioclient = webdriverio.remote(options)
       wdioclient
         .init()
-        .url('https://duckduckgo.com/')
+        .url('http://localhost:8022/index-spec.html')
         .then(function () {
-          console.log('will start the testsss')
+          console.log('page loaded, will start the tests')
           global.wdioclient = wdioclient
           wallaby.start()
         })
