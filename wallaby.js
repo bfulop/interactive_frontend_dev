@@ -34,20 +34,28 @@ module.exports = function (wallaby) {
     testFramework: 'mocha',
 
     setup: function (wallaby) {
-      if (global.wdioclient) return
+      if (global.client) return
       // console.log('wdio', global.wdioclient)
-      wallaby.delayStart()
+      // wallaby.delayStart()
+      var mocha = wallaby.testFramework
+      mocha.asyncOnly = true
       var webdriverio = require('webdriverio')
-      var options = { desiredCapabilities: { browserName: 'firefox' } }
+      var options = { desiredCapabilities: { browserName: 'chrome' } }
       var wdioclient = webdriverio.remote(options)
-      wdioclient
-        .init()
-        .url('http://localhost:8022/index-spec.html')
-        .then(function () {
-          console.log('page loaded, will start the tests')
-          global.wdioclient = wdioclient
+      global.client = wdioclient.init().url('http://localhost:8022/index-spec.html')
+      global.client.then(function () {
+        global.runwdio = function (mylog) {
+          return wdioclient.execute(function (atext) {
+            Inferno.render(Inferno.createElement('div', null, atext), document.body)
+          }, mylog)
+        }
+        console.log('client initialised')
+        global.runwdio('starting phase').then(function (result) {
+          console.log('Exec run in test: ' + result)
           wallaby.start()
+          return result.value
         })
+      })
     },
 
     teardown: function (wallaby) {
