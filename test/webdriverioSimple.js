@@ -9,10 +9,12 @@ var expect = chai.expect
 var client = global.client
 
 describe('my webdriverio tests', function () {
+  var subject
   before('run some code in the browser', function () {
-    return global.runwdio('testingssssss').then(function (result) {
-      console.log('Exerc runs sin rtest: ' + result.value)
-      return result.value
+    subject = require('../src/webdriverComponent')
+    return client.execute(subject, 2, 3).then(function (result) {
+      console.log('code executed on client', result.value)
+      return result
     })
   })
 

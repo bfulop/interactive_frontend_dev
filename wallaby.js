@@ -11,7 +11,7 @@ module.exports = function (wallaby) {
       // {pattern: 'node_modules/aphrodite/dist/aphrodite.js', instrument: false},
       // {pattern: 'node_modules/inferno-test-utils/inferno-test-utils.js', instrument: false, load: false},
 
-      {pattern: 'src/webdriverComponent.js', load: true}
+      {pattern: 'src/webdriverComponent.js', load: true, instrument: false}
     ],
 
     tests: [
@@ -36,25 +36,16 @@ module.exports = function (wallaby) {
     setup: function (wallaby) {
       if (global.client) return
       // console.log('wdio', global.wdioclient)
-      // wallaby.delayStart()
+      wallaby.delayStart()
       var mocha = wallaby.testFramework
       mocha.asyncOnly = true
       var webdriverio = require('webdriverio')
       var options = { desiredCapabilities: { browserName: 'chrome' } }
       var wdioclient = webdriverio.remote(options)
       global.client = wdioclient.init().url('http://localhost:8022/index-spec.html')
-      global.client.then(function () {
-        global.runwdio = function (mylog) {
-          return wdioclient.execute(function (atext) {
-            Inferno.render(Inferno.createElement('div', null, atext), document.body)
-          }, mylog)
-        }
-        console.log('client initialised')
-        global.runwdio('starting phase').then(function (result) {
-          console.log('Exec run in test: ' + result)
-          wallaby.start()
-          return result.value
-        })
+      .then(function (result) {
+        wallaby.start()
+        return result
       })
     },
 
