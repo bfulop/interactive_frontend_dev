@@ -1,8 +1,6 @@
 
-function addnumbers (a, b) {
-  console.log('addnumbersr')
-  return a + b
-  // return a + b
+function addnumbers (sometext) {
+  return Inferno.createElement('div', null, sometext)
 }
 
 module.exports = addnumbers

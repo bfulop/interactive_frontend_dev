@@ -39,11 +39,24 @@ module.exports = function (wallaby) {
       wallaby.delayStart()
       var mocha = wallaby.testFramework
       mocha.asyncOnly = true
+
+      function wrapRenderer (targetFunc) {
+        return `return (function (sometext) {
+            ${targetFunc.toString()}
+            return Inferno.render(${targetFunc.name}(sometext), document.body)
+         }).apply(null, arguments)
+        `
+      }
+
       var webdriverio = require('webdriverio')
       var options = { desiredCapabilities: { browserName: 'chrome' } }
       var wdioclient = webdriverio.remote(options)
       global.client = wdioclient.init().url('http://localhost:8022/index-spec.html')
       .then(function (result) {
+        global.renderComponent = function (component, props) {
+          var renderDef = wrapRenderer(component)
+          wdioclient.execute(renderDef, props)
+        }
         wallaby.start()
         return result
       })
