@@ -2,7 +2,7 @@
 
 Like CSS livereload but for HTML and JavaScript components.
 
-![Live testing demo](http://815b1b87b51011a7a029-623c55fb68acb92f1f433c6448bed244.r60.cf3.rackcdn.com/github/interactive-dev/Wallaby%20Demo.gif)
+[![Live testing demo](http://815b1b87b51011a7a029-623c55fb68acb92f1f433c6448bed244.r60.cf3.rackcdn.com/github/interactive-dev/Wallaby%20Demo.gif)](https://youtu.be/yhEB5MWihZM)
 
 
 ## 1. Components based 
