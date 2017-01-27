@@ -10,11 +10,12 @@ var client = global.client
 var renderComponent = global.renderComponent
 
 describe('my webdriverio tests', function () {
-  var subject
   before('run some code in the browser', function () {
     // global.client.end()
-    subject = require('../src/webdriverComponent')
-    return renderComponent(subject, 'mycomponents')
+    var subject = require('../src/webdriverComponent')
+    var component = subject.component
+    var subcomponent = subject.subcomponent
+    return renderComponent(component, {texts: {text: 'wallaby'}}, [subcomponent])
   })
 
   it('can get the title', function () {

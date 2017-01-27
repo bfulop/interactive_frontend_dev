@@ -40,10 +40,12 @@ module.exports = function (wallaby) {
       var mocha = wallaby.testFramework
       mocha.asyncOnly = true
 
-      function wrapRenderer (targetFunc) {
-        return `return (function (sometext) {
+      function wrapRenderer (targetFunc, helperlist) {
+        return `return (function (state) {
+            function dispatch(action){console.log(action)}
+            ${helperlist.map(function (helper) { return helper.toString() }).join(` \n`)}
             ${targetFunc.toString()}
-            return Inferno.render(${targetFunc.name}(sometext), document.body)
+            return Inferno.render(${targetFunc.name}(dispatch, state), document.body)
          }).apply(null, arguments)
         `
       }
@@ -53,9 +55,9 @@ module.exports = function (wallaby) {
       var wdioclient = webdriverio.remote(options)
       global.client = wdioclient.init().url('http://localhost:8022/index-spec.html')
       .then(function (result) {
-        global.renderComponent = function (component, props) {
-          var renderDef = wrapRenderer(component)
-          wdioclient.execute(renderDef, props)
+        global.renderComponent = function (component, state, helperlist) {
+          var renderDef = wrapRenderer(component, helperlist)
+          wdioclient.execute(renderDef, state)
         }
         wallaby.start()
         return result
