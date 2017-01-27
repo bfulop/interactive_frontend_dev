@@ -41,7 +41,7 @@ module.exports = function (wallaby) {
       mocha.asyncOnly = true
 
       function wrapRenderer (targetFunc, helperlist) {
-        return `return (function (state) {
+        return `return (function (state, styles) {
             function dispatch(action){console.log(action)}
             ${helperlist.map(function (helper) { return helper.toString() }).join(` \n`)}
             ${targetFunc.toString()}
@@ -55,9 +55,9 @@ module.exports = function (wallaby) {
       var wdioclient = webdriverio.remote(options)
       global.client = wdioclient.init().url('http://localhost:8022/index-spec.html')
       .then(function (result) {
-        global.renderComponent = function (component, state, helperlist) {
+        global.renderComponent = function (component, state, css, helperlist) {
           var renderDef = wrapRenderer(component, helperlist)
-          wdioclient.execute(renderDef, state)
+          wdioclient.execute(renderDef, state, css)
         }
         wallaby.start()
         return result
