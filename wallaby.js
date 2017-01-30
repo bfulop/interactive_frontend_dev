@@ -51,14 +51,26 @@ module.exports = function (wallaby) {
       }
 
       var webdriverio = require('webdriverio')
-      var options = { desiredCapabilities: { browserName: 'chrome' } }
-      var wdioclient = webdriverio.remote(options)
+      var wdioclient = webdriverio.multiremote({
+        desktopBrowser: {
+          desiredCapabilities: {
+            browserName: 'chrome'
+          }
+        },
+        mobileBrowser: {
+          desiredCapabilities: {
+            browserName: 'chrome'
+          }
+        }
+      })
       global.client = wdioclient.init().url('http://localhost:8022/index-spec.html')
       .then(function (result) {
         global.renderComponent = function (component, state, css, helperlist) {
           var renderDef = wrapRenderer(component, helperlist)
           wdioclient.execute(renderDef, state, css)
         }
+        global.desktop = wdioclient.select('desktopBrowser').windowHandleSize({width: 1200, height: 600})
+        global.mobile = wdioclient.select('mobileBrowser').windowHandleSize({width: 320, height: 600})
         wallaby.start()
         return result
       })
