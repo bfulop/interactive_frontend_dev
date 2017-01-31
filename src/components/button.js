@@ -8,4 +8,12 @@ function button (dispatch, {texts, children}) {
   )
 }
 
+function multiplynumbers (a, b) {
+  return a * b
+}
+
+function addnumbers (a, b) {
+  return a + b
+}
+
 export default button
