@@ -11,11 +11,14 @@ module.exports = function (wallaby) {
       // {pattern: 'node_modules/aphrodite/dist/aphrodite.js', instrument: false},
       // {pattern: 'node_modules/inferno-test-utils/inferno-test-utils.js', instrument: false, load: false},
 
-      {pattern: 'src/webdriverComponent.js', load: true, instrument: false}
+      {pattern: './wallaby-wdio.js', load: true, instrument: false},
+      {pattern: './test-mocks.js', load: true, instrument: false},
+      {pattern: 'src/components/*.js', load: true, instrument: false},
+      {pattern: 'src/components/*-spec.js', ignore: true}
     ],
 
     tests: [
-      {pattern: 'test/webdriverioSimple.js', load: true}
+      {pattern: 'src/**/*-spec.js', load: true}
     ],
 
     // compilers: {
@@ -34,45 +37,19 @@ module.exports = function (wallaby) {
     testFramework: 'mocha',
 
     setup: function (wallaby) {
-      if (global.client) return
+      if (global.wdiorunning) return
       // console.log('wdio', global.wdioclient)
       wallaby.delayStart()
       var mocha = wallaby.testFramework
       mocha.asyncOnly = true
-
-      function wrapRenderer (targetFunc, helperlist) {
-        return `return (function (state, styles) {
-            function dispatch(action){console.log(action)}
-            ${helperlist.map(function (helper) { return helper.toString() }).join(` \n`)}
-            ${targetFunc.toString()}
-            return Inferno.render(${targetFunc.name}(dispatch, state), document.body)
-         }).apply(null, arguments)
-        `
-      }
-
-      var webdriverio = require('webdriverio')
-      var wdioclient = webdriverio.multiremote({
-        desktopBrowser: {
-          desiredCapabilities: {
-            browserName: 'chrome'
-          }
-        },
-        mobileBrowser: {
-          desiredCapabilities: {
-            browserName: 'chrome'
-          }
-        }
-      })
-      global.client = wdioclient.init().url('http://localhost:8022/index-spec.html')
-      .then(function (result) {
-        global.renderComponent = function (component, state, css, helperlist) {
-          var renderDef = wrapRenderer(component, helperlist)
-          wdioclient.execute(renderDef, state, css)
-        }
-        global.desktop = wdioclient.select('desktopBrowser').windowHandleSize({width: 1200, height: 600})
-        global.mobile = wdioclient.select('mobileBrowser').windowHandleSize({width: 320, height: 600})
+      var wdioclient = require('./wallaby-wdio')
+      wdioclient.init().then(function (wdio) {
+        global.wdiorunning = true
+        global.mobile = wdio.mobile
+        global.desktop = wdio.desktop
+        global.renderComponent = wdio.renderComponent
+        global.wdioteardown = wdio.teardown
         wallaby.start()
-        return result
       })
     },
 

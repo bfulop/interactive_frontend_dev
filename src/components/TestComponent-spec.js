@@ -6,19 +6,18 @@ var chaiAsPromised = require('chai-as-promised')
 chai.use(chaiAsPromised)
 var expect = chai.expect
 
-var client = global.client
 var renderComponent = global.renderComponent
 var desktop = global.desktop
 var mobile = global.mobile
 
 describe('my webdriverio tests', function () {
-  var subject = require('../src/webdriverComponent')
+  var mockElems = require('../../test-mocks.js')
+  var subject = require('./TestComponent')
   var component = subject.component
   var subcomponent = subject.subcomponent
   var css = subject.styles
   before('run some code in the browser', function () {
-    // global.client.end()
-    return renderComponent(component, {texts: {text: 'Wallaby'}}, css, [subcomponent])
+    return renderComponent(component, {texts: {text: mockElems.fakeTexts.title}}, css, [subcomponent])
   })
 
   it('mobile width assertion', function () {
