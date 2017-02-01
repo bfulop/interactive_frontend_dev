@@ -32,14 +32,15 @@ module.exports = function (wallaby) {
       type: 'node'
     },
     workers: {
-      initial: 2,
-      regular: 2
+      initial: 1,
+      regular: 1
     },
     // debug: true,
 
     testFramework: 'mocha',
 
     setup: function (wallaby) {
+      console.log('wid', wallaby.workerId)
       if (global.wdiorunning) return
       // console.log('wdio', global.wdioclient)
       wallaby.delayStart()
@@ -47,8 +48,8 @@ module.exports = function (wallaby) {
       mocha.asyncOnly = true
       var wdioclient = require('./wallaby-wdio')
       wdioclient.init(wallaby.workerId).then(function (wdio) {
-        global.workerId = wallaby.workerId
-        global[wdioclient + wallaby.workerId] = wdioclient
+        global.mobile = wdio.mobile
+        global.desktop = wdio.desktop
         global.renderComponent = wdio.renderComponent
         global.wdioteardown = wdio.teardown
         console.log('will start tests')
