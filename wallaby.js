@@ -31,7 +31,10 @@ module.exports = function (wallaby) {
     env: {
       type: 'node'
     },
-
+    workers: {
+      initial: 2,
+      regular: 2
+    },
     // debug: true,
 
     testFramework: 'mocha',
@@ -43,14 +46,15 @@ module.exports = function (wallaby) {
       var mocha = wallaby.testFramework
       mocha.asyncOnly = true
       var wdioclient = require('./wallaby-wdio')
-      wdioclient.init().then(function (wdio) {
-        global.wdiorunning = true
-        global.mobile = wdio.mobile
-        global.desktop = wdio.desktop
+      wdioclient.init(wallaby.workerId).then(function (wdio) {
+        global.workerId = wallaby.workerId
+        global[wdioclient + wallaby.workerId] = wdioclient
         global.renderComponent = wdio.renderComponent
         global.wdioteardown = wdio.teardown
+        console.log('will start tests')
         wallaby.start()
       })
+      global.wdiorunning = true
     },
 
     teardown: function (wallaby) {

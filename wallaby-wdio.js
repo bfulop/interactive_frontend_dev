@@ -1,17 +1,11 @@
 var webdriverio = require('webdriverio')
 
-var wdioclient = webdriverio.multiremote({
-  desktopBrowser: {
-    desiredCapabilities: {
-      browserName: 'chrome'
-    }
-  },
-  mobileBrowser: {
-    desiredCapabilities: {
-      browserName: 'chrome'
-    }
+var conf = {
+  browserSizes: {
+    1: {width: 432, height: 700},
+    0: {width: 1200, height: 600}
   }
-})
+}
 
 function wrapRenderer (targetFunc, helperlist) {
   return `return (function (state, styles) {
@@ -23,19 +17,22 @@ function wrapRenderer (targetFunc, helperlist) {
   `
 }
 
-function init () {
+function init (workerId) {
+  console.log('worker id', workerId)
+  var wdioclient = webdriverio.remote({
+    desiredCapabilities: {
+      browserName: 'chrome'
+    }
+  })
   return wdioclient.init().url('http://localhost:8022/index-spec.html')
   .then(function () {
+    wdioclient.windowHandleSize(conf.browserSizes[workerId])
     return {
       renderComponent: function (component, state, css, helperlist) {
         var renderDef = wrapRenderer(component, helperlist)
         wdioclient.execute(renderDef, state, css)
       },
-
-      desktop: wdioclient.select('desktopBrowser').windowHandleSize({width: 1200, height: 600}),
-
-      mobile: wdioclient.select('mobileBrowser').windowHandleSize({width: 320, height: 600})
-
+      client: wdioclient
     }
   })
 }
