@@ -3,6 +3,8 @@
 var aphrodite = require('aphrodite')
 var css = aphrodite.css
 
+var SubComponent = require('./Subcomponent').component
+
 var styles = aphrodite.StyleSheet.create({
   HeaderContent: {
     width: 1170,
@@ -19,10 +21,7 @@ function FestivalHeader (dispatch, state) {
     {'data-wdio': 'FestivalHeaderLogo'},
     'i am the logo'
     ),
-    Inferno.createElement('input',
-    {'id': 'username'},
-    'i am the logo'
-    )
+    SubComponent()
   )
 }
 

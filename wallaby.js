@@ -13,6 +13,7 @@ module.exports = function (wallaby) {
 
       {pattern: './wdio-wallaby.js', load: true, instrument: false},
       {pattern: './wdio-pageobject.js', load: true, instrument: false},
+      {pattern: './wdio-Fakecomponent.js', load: true, instrument: false},
       {pattern: './test-mocks.js', load: true, instrument: false},
       {pattern: 'src/components/*.js', load: true, instrument: false},
       {pattern: 'src/components/*-spec.js', ignore: true}
