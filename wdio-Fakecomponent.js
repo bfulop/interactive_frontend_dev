@@ -1,7 +1,7 @@
 
 /* global Inferno */
 
-function SubComponent (dispatch, state) {
+function testdouble (dispatch, state) {
   return Inferno.createElement(
     'div',
     null,
@@ -10,5 +10,5 @@ function SubComponent (dispatch, state) {
 }
 
 module.exports = {
-  component: SubComponent
+  component: testdouble
 }

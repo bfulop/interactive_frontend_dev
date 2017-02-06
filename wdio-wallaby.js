@@ -16,7 +16,7 @@ var wdioclient = webdriverio.multiremote({
 function wrapRenderer (targetFunc, helperlist) {
   return `return (function (state, styles) {
       function dispatch(action){console.log(action)}
-      ${helperlist.map(function (helper) { return helper.toString() }).join(` \n`)}
+      ${helperlist.map(function (helper) { return helper.fn.toString().replace(helper.fn.name, helper.as) }).join(` \n`)}
       ${targetFunc.toString()}
       return renderer(${targetFunc.name}(dispatch, state))
     }).apply(null, arguments)

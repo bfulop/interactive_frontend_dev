@@ -9,7 +9,7 @@ describe('Festivals Header Component Specs', function () {
     var css = subject.styles
     fakeComponent
 
-    return renderComponent(component, {texts: {text: 'header 1' + mockElems.fakeTexts.title}}, css, [fakeComponent])
+    return renderComponent(component, {texts: {text: 'header 1' + mockElems.fakeTexts.title}}, css, [{fn: fakeComponent, as: 'LogoBlocks'}])
   })
 
   // describe.skip('testing with PageObjects', function () {

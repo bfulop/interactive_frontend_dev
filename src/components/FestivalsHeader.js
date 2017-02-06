@@ -3,7 +3,7 @@
 var aphrodite = require('aphrodite')
 var css = aphrodite.css
 
-var SubComponent = require('./Subcomponent').component
+var LogoBlocks = require('./Subcomponent').component
 
 var styles = aphrodite.StyleSheet.create({
   HeaderContent: {
@@ -21,7 +21,7 @@ function FestivalHeader (dispatch, state) {
     {'data-wdio': 'FestivalHeaderLogo'},
     'i am the logo'
     ),
-    SubComponent()
+    LogoBlocks()
   )
 }
 
