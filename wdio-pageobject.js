@@ -45,10 +45,16 @@ var PageElementDimensions = {
       return res.x
     })
   },
+  get left () {
+    return this.posX()
+  },
   get posY () {
     return this.location.then(function (res) {
       return res.y
     })
+  },
+  get top () {
+    return this.posY()
   },
   get right () {
     return Promise.all([this.posX, this.width]).then(function (values) {
