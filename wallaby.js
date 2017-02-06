@@ -51,13 +51,16 @@ module.exports = function (wallaby) {
       global.expect = chai.expect
       var wdioclient = require('./wdio-wallaby')
       var pageObject = require('./wdio-pageobject')
-      wdioclient.init(wallaby.workerId).then(function (wdio) {
+      wdioclient.init().then(function (wdio) {
         global.renderComponent = wdio.renderComponent
         global.wdioteardown = wdio.teardown
         pageObject.init(wdio)
         global.PageElement = pageObject.PageElement
         global.distance = pageObject.distance
         global.convertmobile = pageObject.convertMobile
+        wdio.wdioclient.execute(function (workerId) {
+          setWallabyWorkerIdAsPageTitle(workerId)
+        }, wallaby.workerId)
         console.log('will start tests')
         wallaby.start()
       })
