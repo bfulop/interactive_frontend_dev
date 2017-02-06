@@ -2,7 +2,7 @@
 
 var fakeTexts = {
   title: 'Title Texts',
-  subtite: 'Sub Title Text',
+  subtitle: 'Sub Title Text',
   link: 'I\'m a link',
   body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
   bodyShort: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',

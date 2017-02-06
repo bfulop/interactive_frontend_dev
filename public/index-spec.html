@@ -13,6 +13,9 @@
     function renderer (component) {
       return Inferno.render(component, document.getElementById('specembed'))
     }
+    function setWallabyWorkerIdAsPageTitle(id){
+      document.title = 'Wallaby' + id + ' ' + document.title
+    }
   </script>
 </head>
 

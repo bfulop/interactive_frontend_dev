@@ -27,6 +27,7 @@ function init () {
   return wdioclient.init().url('http://localhost:8022/index-spec.html')
   .then(function () {
     return {
+      wdioclient: wdioclient,
       renderComponent: function (component, state, css, helperlist) {
         var renderDef = wrapRenderer(component, helperlist)
         wdioclient.execute(renderDef, state, css)
