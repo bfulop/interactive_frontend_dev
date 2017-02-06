@@ -1,4 +1,4 @@
-/* global expect, describe, before, it, PageElement, renderComponent  */
+/* global expect, describe, before, it, PageElement, renderComponent, sizes  */
 
 describe('Festivals Header Component Specs', function () {
   before('import the component', function () {
@@ -15,6 +15,9 @@ describe('Festivals Header Component Specs', function () {
 
     it('username on desktop should be 131px wide', function () {
       return expect(username.desktop.width).to.eventually.equal(131)
+    })
+    it('should be 100% wide on mobile', function () {
+      return expect(username.mobile.width).to.eventually.equal(sizes.mobile.width)
     })
   })
 })

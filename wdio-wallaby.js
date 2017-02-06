@@ -23,7 +23,7 @@ function wrapRenderer (targetFunc, helperlist) {
   `
 }
 
-function init () {
+function init (browserSizes) {
   return wdioclient.init().url('http://localhost:8022/index-spec.html')
   .then(function () {
     return {
@@ -33,9 +33,9 @@ function init () {
         wdioclient.execute(renderDef, state, css)
       },
 
-      desktop: wdioclient.select('desktopBrowser').windowHandleSize({width: 1200, height: 600}),
+      desktop: wdioclient.select('desktopBrowser').windowHandleSize(browserSizes.desktop),
 
-      mobile: wdioclient.select('mobileBrowser').windowHandleSize({width: 320, height: 600})
+      mobile: wdioclient.select('mobileBrowser').windowHandleSize(browserSizes.mobile)
 
     }
   })
