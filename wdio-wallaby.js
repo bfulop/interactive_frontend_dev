@@ -16,14 +16,14 @@ var wdioclient = webdriverio.multiremote({
 function wrapRenderer (targetFunc, helperlist) {
   return `return (function (state, styles) {
       function dispatch(action){console.log(action)}
-      ${helperlist.map(function (helper) { return helper.toString() }).join(` \n`)}
+      ${helperlist.map(function (helper) { return helper.fn.toString().replace(helper.fn.name, helper.as) }).join(` \n`)}
       ${targetFunc.toString()}
       return renderer(${targetFunc.name}(dispatch, state))
     }).apply(null, arguments)
   `
 }
 
-function init () {
+function init (browserSizes) {
   return wdioclient.init().url('http://localhost:8022/index-spec.html')
   .then(function () {
     return {
@@ -33,9 +33,9 @@ function init () {
         wdioclient.execute(renderDef, state, css)
       },
 
-      desktop: wdioclient.select('desktopBrowser').windowHandleSize({width: 1200, height: 600}),
+      desktop: wdioclient.select('desktopBrowser').windowHandleSize(browserSizes.desktop),
 
-      mobile: wdioclient.select('mobileBrowser').windowHandleSize({width: 320, height: 600})
+      mobile: wdioclient.select('mobileBrowser').windowHandleSize(browserSizes.mobile)
 
     }
   })
