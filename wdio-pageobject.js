@@ -46,7 +46,7 @@ var PageElementDimensions = {
     })
   },
   get left () {
-    return this.posX()
+    return this.posX
   },
   get posY () {
     return this.location.then(function (res) {
@@ -54,7 +54,7 @@ var PageElementDimensions = {
     })
   },
   get top () {
-    return this.posY()
+    return this.posY
   },
   get right () {
     return Promise.all([this.posX, this.width]).then(function (values) {

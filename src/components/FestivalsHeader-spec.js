@@ -12,6 +12,16 @@ describe('Festivals Header Component Specs', function () {
     return renderComponent(component, {texts: {text: 'header 1' + mockElems.fakeTexts.title}}, css, [{fn: fakeComponent, as: 'LogoBlocks'}])
   })
 
+  describe('Specs', function () {
+    var rootelem = Object.create(PageElement)
+    rootelem.init('[data-wdio="FestivalHeader"]')
+
+    describe('root elem Specs', function () {
+      it('use posX', () => rootelem.desktop.posX.then(r => expect(r).to.equal(0)))
+      it('use left shorthand', () => rootelem.desktop.left.then(r => expect(r).to.equal(1)))
+    })
+  })
+
   // describe.skip('testing with PageObjects', function () {
   //   var username = Object.create(PageElement)
   //   username.init('#username')
