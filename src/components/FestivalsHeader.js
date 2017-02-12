@@ -19,7 +19,7 @@ function FestivalHeader (dispatch, state) {
     {className: css(styles.HeaderContent), 'data-wdio': 'FestivalHeader', id: 'header'},
     Inferno.createElement('div',
     {'data-wdio': 'FestivalHeaderLogo'},
-    'i am the logo'
+    state.maintitle
     ),
     LogoBlocks()
   )

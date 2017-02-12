@@ -4,12 +4,13 @@ describe('Festivals Header Component Specs', function () {
   before('import the component', function () {
     var mockElems = require('../../test-mocks.js')
     var subject = require('./FestivalsHeader')
+    var subjectData = require('./FestivalHeader-model')
     var fakeComponent = require('../../wdio-Fakecomponent').component
     var component = subject.component
     var css = subject.styles
     fakeComponent
 
-    return renderComponent(component, {texts: {text: 'header 1' + mockElems.fakeTexts.title}}, css, [{fn: fakeComponent, as: 'LogoBlocks'}])
+    return renderComponent(component, subjectData, css, [{fn: fakeComponent, as: 'LogoBlocks'}])
   })
 
   describe('Specs', function () {
