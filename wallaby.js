@@ -43,14 +43,16 @@ module.exports = function (wallaby) {
           mode: 'detach'
         }
       })
+      nightmare.goto('http://localhost:8022/index-spec.html')
+      .then(function () {
+        wallaby.start()
+      })
       global.testthis = function (aparam) {
         return nightmare
-        .goto('http://localhost:8022/index-spec.html')
         .evaluate(function (param) {
           return param
         }, aparam)
       }
-      wallaby.start()
 
       global.wdiorunning = true
     },
