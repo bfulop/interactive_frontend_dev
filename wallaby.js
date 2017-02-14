@@ -1,3 +1,4 @@
+delete process.env.ELECTRON_RUN_AS_NODE
 // var wallabyWebpack = require('wallaby-webpack')
 // var webpackPostprocessor = wallabyWebpack({})
 
@@ -5,30 +6,16 @@ module.exports = function (wallaby) {
   return {
 
     files: [
-      // {pattern: 'node_modules/chai/chai.js', instrument: false},
-      // {pattern: 'node_modules/webdriverio/build/index.js', instrument: false},
-      // {pattern: 'node_modules/inferno/dist/inferno.js', instrument: false},
-      // {pattern: 'node_modules/aphrodite/dist/aphrodite.js', instrument: false},
-      // {pattern: 'node_modules/inferno-test-utils/inferno-test-utils.js', instrument: false, load: false},
-
-      {pattern: './wdio-wallaby.js', load: true, instrument: false},
-      {pattern: './wdio-pageobject.js', load: true, instrument: false},
       {pattern: './wdio-Fakecomponent.js', load: true, instrument: false},
       {pattern: './test-mocks.js', load: true, instrument: false},
       {pattern: 'src/components/*.js', load: true, instrument: false},
-      {pattern: 'src/components/*-spec.js', ignore: true}
+      {pattern: 'src/components/*-spec.js', ignore: true},
+      {pattern: 'src/components/nightmare-running.js'}
     ],
 
     tests: [
-      {pattern: 'src/**/*-spec.js', load: true}
+      {pattern: 'src/**/nightmare-spec.js', load: true}
     ],
-
-    // compilers: {
-    //   '**/*.js': wallaby.compilers.babel({
-    //     presets: ['es2015', 'es2016', 'stage-2']
-    //     // plugins: ['inferno']
-    //   })
-    // },
 
     env: {
       type: 'node'
@@ -42,41 +29,29 @@ module.exports = function (wallaby) {
         console.log('wid', wallaby.workerId)
       }
       if (global.wdiorunning) return
-      // console.log('wdio', global.wdioclient)
       wallaby.delayStart()
       var mocha = wallaby.testFramework
+      wallaby.testFramework.timeout(15000)
       mocha.asyncOnly = true
-      var chai = require('chai')
-      var chaiAsPromised = require('chai-as-promised')
-      chai.use(chaiAsPromised)
-      global.expect = chai.expect
-      var wdioclient = require('./wdio-wallaby')
-      var pageObject = require('./wdio-pageobject')
+      global.expect = require('chai').expect
 
-      var browserSizes = {
-        desktop: {
-          width: 1200,
-          height: 600
-        },
-        mobile: {
-          width: 360,
-          height: 640
+      var Nightmare = require('nightmare')
+      var nightmare = global.desktop = Nightmare({
+        show: true,
+        dock: true,
+        openDevTools: {
+          mode: 'detach'
         }
-      }
-      wdioclient.init(browserSizes).then(function (wdio) {
-        global.renderComponent = wdio.renderComponent
-        global.wdioteardown = wdio.teardown
-        pageObject.init(wdio)
-        global.PageElement = pageObject.PageElement
-        global.distance = pageObject.distance
-        global.convertmobile = pageObject.convertMobile
-        global.sizes = browserSizes
-        wdio.wdioclient.execute(function (workerId) {
-          setWallabyWorkerIdAsPageTitle(workerId)
-        }, wallaby.workerId)
-        console.log('will start tests')
-        wallaby.start()
       })
+      global.testthis = function (aparam) {
+        return nightmare
+        .goto('http://localhost:8022/index-spec.html')
+        .evaluate(function (param) {
+          return param
+        }, aparam)
+      }
+      wallaby.start()
+
       global.wdiorunning = true
     },
 
