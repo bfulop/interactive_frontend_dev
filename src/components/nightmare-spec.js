@@ -6,5 +6,10 @@ describe('test nightmare', function () {
       return expect(res).to.equal('specembed')
     })
   })
+  it('executes more code', function () {
+    return testthis('specembed2').then(function (res) {
+      return expect(res).to.equal('specembed2')
+    })
+  })
 })
 

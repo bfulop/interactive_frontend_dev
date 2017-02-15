@@ -7,6 +7,7 @@ module.exports = function (wallaby) {
 
     files: [
       {pattern: './wdio-Fakecomponent.js', load: true, instrument: false},
+      {pattern: './nightmarejs-wallaby.js', load: true, instrument: false},
       {pattern: './test-mocks.js', load: true, instrument: false},
       {pattern: 'src/components/*.js', load: true, instrument: false},
       {pattern: 'src/components/*-spec.js', ignore: true},
@@ -34,26 +35,11 @@ module.exports = function (wallaby) {
       wallaby.testFramework.timeout(15000)
       mocha.asyncOnly = true
       global.expect = require('chai').expect
-
-      var Nightmare = require('nightmare')
-      var nightmare = global.desktop = Nightmare({
-        show: true,
-        dock: true,
-        openDevTools: {
-          mode: 'detach'
-        }
-      })
-      nightmare.goto('http://localhost:8022/index-spec.html')
-      .then(function () {
+      var nightmare = require('./nightmarejs-wallaby')
+      nightmare.init(function () {
+        global.testthis = nightmare.testthis
         wallaby.start()
       })
-      global.testthis = function (aparam) {
-        return nightmare
-        .evaluate(function (param) {
-          return param
-        }, aparam)
-      }
-
       global.wdiorunning = true
     },
 
