@@ -1,5 +1,6 @@
 var Nightmare = require('nightmare')
 var nightmare
+var path = require('path')
 
 function testthis (aparam) {
   return nightmare
@@ -19,6 +20,14 @@ function init (cb) {
   nightmare.goto('http://localhost:8022/index-spec.html').then(function () {
     cb()
   })
+}
+
+function renderComponent (component, state, helperlist) {
+  var helpers = helperlist.map(function (helper) { return helper.fn.toString().replace(helper.fn.name, helper.as) }).join(` \n`)
+  return nightmare.evaluate(function (func, state, helpers) {
+    var component = new Function(helpers + ' return ' + func)()
+    return renderer(component(dispatch, state))
+  }, component.toString(), state, helpers)
 }
 
 var PageElementDimensions = {
@@ -82,5 +91,6 @@ var PageElement = {
 module.exports = {
   init: init,
   testthis: testthis,
-  PageElement: PageElement
+  PageElement: PageElement,
+  renderComponent: renderComponent
 }

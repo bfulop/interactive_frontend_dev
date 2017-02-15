@@ -16,16 +16,21 @@ var styles = aphrodite.StyleSheet.create({
 function FestivalHeader (dispatch, state) {
   return Inferno.createElement(
     'div',
-    {className: css(styles.HeaderContent), 'data-wdio': 'FestivalHeader', id: 'header'},
+    {'data-wdio': 'FestivalHeader', id: 'header'},
     Inferno.createElement('div',
     {'data-wdio': 'FestivalHeaderLogo'},
-    state.maintitle
+    'state.maintitle'
     ),
     LogoBlocks()
   )
 }
 
+function test () {
+  logger('huzzahsssss')
+}
+
 module.exports = {
   component: FestivalHeader,
-  styles: styles
+  styles: styles,
+  test: test
 }

@@ -16,6 +16,12 @@
     function setWallabyWorkerIdAsPageTitle(id){
       document.title = 'Wallaby' + id + ' ' + document.title
     }
+    function dispatch (action) { console.log(action) }
+    window.logger = function (cb) {
+      console.log('will log stuff')
+      console.log(cb)
+      return true
+    }
   </script>
 </head>
 

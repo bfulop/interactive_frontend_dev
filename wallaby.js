@@ -10,8 +10,8 @@ module.exports = function (wallaby) {
       {pattern: './nightmarejs-wallaby.js', load: true, instrument: false},
       {pattern: './test-mocks.js', load: true, instrument: false},
       {pattern: 'src/components/*.js', load: true, instrument: false},
-      {pattern: 'src/components/*-spec.js', ignore: true},
-      {pattern: 'src/components/nightmare-running.js'}
+      {pattern: './myjs.js', load: true, instrument: false},
+      {pattern: 'src/components/*-spec.js', ignore: true}
     ],
 
     tests: [
@@ -38,6 +38,7 @@ module.exports = function (wallaby) {
       var nightmare = require('./nightmarejs-wallaby')
       nightmare.init(function () {
         global.testthis = nightmare.testthis
+        global.renderComponent = nightmare.renderComponent
         global.PageElement = nightmare.PageElement
         wallaby.start()
       })
