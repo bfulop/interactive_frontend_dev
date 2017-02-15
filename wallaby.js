@@ -38,6 +38,7 @@ module.exports = function (wallaby) {
       var nightmare = require('./nightmarejs-wallaby')
       nightmare.init(function () {
         global.testthis = nightmare.testthis
+        global.PageElement = nightmare.PageElement
         wallaby.start()
       })
       global.wdiorunning = true

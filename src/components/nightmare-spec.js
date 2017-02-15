@@ -1,15 +1,10 @@
-/* global describe, it, desktop, expect */
+/* global describe, it, desktop, expect, PageElement */
 
 describe('test nightmare', function () {
-  it('executes some code in the browser', function () {
-    return testthis('specembed').then(function (res) {
-      return expect(res).to.equal('specembed')
-    })
-  })
-  it('executes more code', function () {
-    return testthis('specembed2').then(function (res) {
-      return expect(res).to.equal('specembed2')
-    })
-  })
+  var rootelem = Object.create(PageElement)
+  rootelem.init('#specembed')
+
+  it('test width', () => rootelem.desktop.width.then(r => expect(r).to.equal(804)))
+  it('test height', () => rootelem.desktop.height.then(r => expect(r).to.equal(124)))
 })
 
