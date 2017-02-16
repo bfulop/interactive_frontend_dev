@@ -1,13 +1,5 @@
 var Nightmare = require('nightmare')
 var nightmare
-var path = require('path')
-
-function testthis (aparam) {
-  return nightmare
-  .evaluate(function (param) {
-    return param
-  }, aparam)
-}
 
 function init (cb) {
   nightmare = Nightmare({
@@ -94,7 +86,6 @@ var PageElement = {
 
 module.exports = {
   init: init,
-  testthis: testthis,
   PageElement: PageElement,
   renderComponent: renderComponent
 }

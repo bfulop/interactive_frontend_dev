@@ -37,7 +37,6 @@ module.exports = function (wallaby) {
       global.expect = require('chai').expect
       var nightmare = require('./nightmarejs-wallaby')
       nightmare.init(function () {
-        global.testthis = nightmare.testthis
         global.renderComponent = nightmare.renderComponent
         global.PageElement = nightmare.PageElement
         wallaby.start()
