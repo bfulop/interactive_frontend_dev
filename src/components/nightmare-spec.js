@@ -11,7 +11,9 @@ describe('test nightmare', function () {
     return renderComponent(component, subjectData, [{fn: fakeComponent, as: 'LogoBlocks'}])
   })
 
-  it('test width', () => rootelem.desktop.width.then(r => expect(r).to.equal(800)))
-  it('test height', () => rootelem.desktop.height.then(r => expect(r).to.equal(124)))
+  it('test width', () => rootelem.desktop.width.then(r => expect(r).to.equal(1184)))
+  it('test height', () => rootelem.desktop.height.then(r => expect(r).to.equal(104)))
+  it('test mobile width', () => rootelem.mobile.width.then(r => expect(r).to.equal(344)))
+  it('test tablet width', () => rootelem.tablet.width.then(r => expect(r).to.equal(752)))
 })
 

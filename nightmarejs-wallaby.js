@@ -113,6 +113,10 @@ var PageElement = {
     this.selector = selector
     this.desktop = Object.create(PageElementDimensions)
     this.desktop.init(desktop, selector)
+    this.mobile = Object.create(PageElementDimensions)
+    this.mobile.init(mobile, selector)
+    this.tablet = Object.create(PageElementDimensions)
+    this.tablet.init(tablet, selector)
   }
 }
 
