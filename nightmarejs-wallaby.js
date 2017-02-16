@@ -25,8 +25,12 @@ function init (cb) {
 function renderComponent (component, state, helperlist) {
   var helpers = helperlist.map(function (helper) { return helper.fn.toString().replace(helper.fn.name, helper.as) }).join(` \n`)
   return nightmare.evaluate(function (func, state, helpers) {
-    var component = new Function(helpers + ' return ' + func)()
-    return renderer(component(dispatch, state))
+    try {
+      var component = new Function(helpers + ' return ' + func)()
+      return renderer(component(dispatch, state))
+    } catch (err) {
+      return err
+    }
   }, component.toString(), state, helpers)
 }
 
