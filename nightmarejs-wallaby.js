@@ -1,29 +1,61 @@
 var Nightmare = require('nightmare')
-var nightmare
+var desktop, mobile, tablet
 
 function init (cb) {
-  nightmare = Nightmare({
+  desktop = Nightmare({
+    width: 1200,
+    height: 600,
     show: true,
     dock: true,
     openDevTools: {
       mode: 'detach'
     }
   })
-  nightmare.goto('http://localhost:8022/index-spec.html').then(function () {
-    cb()
+  desktop.goto('http://localhost:8022/index-spec.html')
+  .then(function () {
+    mobile = Nightmare({
+      width: 360,
+      height: 640,
+      show: true,
+      dock: true,
+      openDevTools: {
+        mode: 'detach'
+      }
+    })
+    mobile.goto('http://localhost:8022/index-spec.html')
+    .then(function () {
+      tablet = Nightmare({
+        width: 768,
+        height: 516,
+        show: true,
+        dock: true,
+        openDevTools: {
+          mode: 'detach'
+        }
+      })
+      tablet.goto('http://localhost:8022/index-spec.html')
+      .then(function () {
+        cb()
+      })
+    })
   })
 }
 
 function renderComponent (component, state, helperlist) {
   var helpers = helperlist.map(function (helper) { return helper.fn.toString().replace(helper.fn.name, helper.as) }).join(` \n`)
-  return nightmare.evaluate(function (func, state, helpers) {
+  function renderOnClient (func, state, helpers) {
     try {
       var component = new Function(helpers + ' return ' + func)()
       return renderer(component(dispatch, state))
     } catch (err) {
       return err
     }
-  }, component.toString(), state, helpers)
+  }
+  return Promise.all([
+    desktop.evaluate(renderOnClient, component.toString(), state, helpers),
+    mobile.evaluate(renderOnClient, component.toString(), state, helpers),
+    tablet.evaluate(renderOnClient, component.toString(), state, helpers)
+  ])
 }
 
 var PageElementDimensions = {
@@ -80,7 +112,7 @@ var PageElement = {
   init (selector) {
     this.selector = selector
     this.desktop = Object.create(PageElementDimensions)
-    this.desktop.init(nightmare, selector)
+    this.desktop.init(desktop, selector)
   }
 }
 

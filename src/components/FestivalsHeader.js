@@ -8,7 +8,7 @@ var LogoBlocks = require('./Subcomponent').component
 function FestivalHeader (dispatch, state) {
   var styles = aphrodite.StyleSheet.create({
     HeaderContent: {
-      width: 1170,
+      width: 200,
       // border: '3px solid red',
       padding: 25,
       'background-color': 'teal'
@@ -23,7 +23,7 @@ function FestivalHeader (dispatch, state) {
     },
     Inferno.createElement('div',
     {'data-wdio': 'FestivalHeaderLogo'},
-    'state.maintitle'
+    'state.maintitlsse'
     ),
     LogoBlocks()
   )
