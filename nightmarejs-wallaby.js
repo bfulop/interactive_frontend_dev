@@ -81,7 +81,6 @@ var PageElementDimensions = {
   },
   get getStyles () {
     var targetStyles = ['color', 'font-family', 'font-size', 'font-style', 'font-weight', 'font-variant', 'line-height', 'text-decoration', 'background-color']
-    console.log('getting styles')
     return this.target.evaluate(function (selector, targetStyles) {
       var elementstyles = window.getComputedStyle(document.querySelector(selector), null)
       return targetStyles.map(function (style) {
@@ -120,7 +119,6 @@ var PageElementDimensions = {
     return this.target.visible(this.selector)
   },
   get BoundingClientRect () {
-    console.log('getting sizes')
     return this.target.evaluate(function (selector) {
       var rect = document.querySelector(selector).getBoundingClientRect()
       return {
@@ -133,36 +131,31 @@ var PageElementDimensions = {
       }
     }, this.selector)
   },
+  get clientRect () {
+    if (!this._clientrect) {
+      this._clientrect = Promise.resolve(this.BoundingClientRect)
+    }
+    return this._clientrect
+  },
   get width () {
-    return this.BoundingClientRect.then(function (res) {
-      return res.width
-    })
+    return this.clientRect.then(r => r.width)
   },
   get height () {
-    return this.BoundingClientRect.then(function (res) {
-      return res.height
-    })
+    return this.clientRect.then(r => r.height)
   },
   get left () {
-    return this.BoundingClientRect.then(function (res) {
-      return res.left
-    })
+    return this.clientRect.then(r => r.left)
   },
   get right () {
-    return this.BoundingClientRect.then(function (res) {
-      return res.right
-    })
+    return this.clientRect.then(r => r.right)
   },
   get top () {
-    return this.BoundingClientRect.then(function (res) {
-      return res.top
-    })
+    return this.clientRect.then(r => r.top)
   },
   get bottom () {
-    return this.BoundingClientRect.then(function (res) {
-      return res.bottom
-    })
+    return this.clientRect.then(r => r.bottom)
   }
+
 }
 
 var PageElement = {
