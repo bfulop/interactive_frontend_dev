@@ -7,9 +7,10 @@ function init (cb) {
     height: 600,
     show: true,
     dock: true,
-    openDevTools: {
-      mode: 'detach'
-    }
+    alwaysOnTop: false,
+    x: 0,
+    y: 0
+
   })
   desktop.goto('http://localhost:8022/index-spec.html')
   .then(function () {
@@ -18,9 +19,9 @@ function init (cb) {
       height: 640,
       show: true,
       dock: true,
-      openDevTools: {
-        mode: 'detach'
-      }
+      alwaysOnTop: false,
+      x: 0,
+      y: 0
     })
     mobile.goto('http://localhost:8022/index-spec.html')
     .then(function () {
@@ -29,9 +30,9 @@ function init (cb) {
         height: 516,
         show: true,
         dock: true,
-        openDevTools: {
-          mode: 'detach'
-        }
+        alwaysOnTop: false,
+        x: 0,
+        y: 0
       })
       tablet.goto('http://localhost:8022/index-spec.html')
       .then(function () {
@@ -58,12 +59,47 @@ function renderComponent (component, state, helperlist) {
   ])
 }
 
+function getStyleProp (list, stylename) {
+  return list.find(function (elem) {
+    return elem.stylename === stylename
+  }).stylevalue
+}
+
 var PageElementDimensions = {
   init (target, selector) {
     this.target = target
     this.selector = selector
   },
+  resetStyleValues () {
+    this._styles = null
+  },
+  get styles () {
+    if (!this._styles) {
+      this._styles = Promise.resolve(this.getStyles)
+    }
+    return this._styles
+  },
+  get getStyles () {
+    var targetStyles = ['color', 'width', 'height']
+    console.log('getting styles')
+    return this.target.evaluate(function (selector, targetStyles) {
+      var elementstyles = window.getComputedStyle(document.querySelector(selector), null)
+      return targetStyles.map(function (style) {
+        return {
+          stylename: style,
+          stylevalue: elementstyles.getPropertyValue(style)
+        }
+      })
+    }, this.selector, targetStyles)
+  },
+  get color () {
+    return this.styles.then(r => getStyleProp(r, 'color'))
+  },
+  get fontsize () {
+    return this.styles.then(r => getStyleProp(r, 'width'))
+  },
   get BoundingClientRect () {
+    console.log('getting sizes')
     return this.target.evaluate(function (selector) {
       var rect = document.querySelector(selector).getBoundingClientRect()
       return {

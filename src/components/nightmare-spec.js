@@ -2,7 +2,7 @@
 
 describe('test nightmare', function () {
   var rootelem = Object.create(PageElement)
-  rootelem.init('#specembed')
+  rootelem.init('#header')
   before('import the component', function () {
     var subject = require('./FestivalsHeader')
     var subjectData = require('./FestivalHeader-model')
@@ -15,5 +15,7 @@ describe('test nightmare', function () {
   it('test height', () => rootelem.desktop.height.then(r => expect(r).to.equal(104)))
   it('test mobile width', () => rootelem.mobile.width.then(r => expect(r).to.equal(344)))
   it('test tablet width', () => rootelem.tablet.width.then(r => expect(r).to.equal(752)))
+  it('test getting style', () => rootelem.desktop.color.then(r => expect(r).to.equal(753)))
+  it('test getting style', () => rootelem.desktop.fontsize.then(r => expect(r).to.equal(200)))
 })
 
