@@ -80,7 +80,7 @@ var PageElementDimensions = {
     return this._styles
   },
   get getStyles () {
-    var targetStyles = ['color', 'width', 'height']
+    var targetStyles = ['color', 'font-family', 'font-size', 'font-style', 'font-weight', 'font-variant', 'line-height', 'text-decoration', 'background-color']
     console.log('getting styles')
     return this.target.evaluate(function (selector, targetStyles) {
       var elementstyles = window.getComputedStyle(document.querySelector(selector), null)
@@ -95,8 +95,29 @@ var PageElementDimensions = {
   get color () {
     return this.styles.then(r => getStyleProp(r, 'color'))
   },
+  get backgroundcolor () {
+    return this.styles.then(r => getStyleProp(r, 'background-color'))
+  },
+  get fontfamily () {
+    return this.styles.then(r => getStyleProp(r, 'font-family'))
+  },
+  get fontweight () {
+    return this.styles.then(r => getStyleProp(r, 'font-weight'))
+  },
+  get textdecoration () {
+    return this.styles.then(r => getStyleProp(r, 'text-decoration'))
+  },
+  get fontvariant () {
+    return this.styles.then(r => getStyleProp(r, 'font-variant'))
+  },
   get fontsize () {
-    return this.styles.then(r => getStyleProp(r, 'width'))
+    return this.styles.then(r => parseInt(getStyleProp(r, 'font-size'), 10))
+  },
+  get lineheight () {
+    return this.styles.then(r => parseInt(getStyleProp(r, 'line-height'), 10))
+  },
+  get visible () {
+    return this.target.visible(this.selector)
   },
   get BoundingClientRect () {
     console.log('getting sizes')

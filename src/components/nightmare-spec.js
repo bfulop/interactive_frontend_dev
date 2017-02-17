@@ -17,5 +17,6 @@ describe('test nightmare', function () {
   it('test tablet width', () => rootelem.tablet.width.then(r => expect(r).to.equal(752)))
   it('test getting style', () => rootelem.desktop.color.then(r => expect(r).to.equal(753)))
   it('test getting style', () => rootelem.desktop.fontsize.then(r => expect(r).to.equal(200)))
+  it('test getting style', () => rootelem.desktop.visible.then(r => expect(r).to.equal(200)))
 })
 
