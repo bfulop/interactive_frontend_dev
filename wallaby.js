@@ -36,7 +36,7 @@ module.exports = function (wallaby) {
       mocha.asyncOnly = true
       global.expect = require('chai').expect
       var nightmare = require('./nightmarejs-wallaby')
-      nightmare.init(function () {
+      nightmare.init().then(function () {
         global.renderComponent = nightmare.renderComponent
         global.PageElement = nightmare.PageElement
         wallaby.start()

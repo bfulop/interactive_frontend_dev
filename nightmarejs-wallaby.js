@@ -1,45 +1,40 @@
 var Nightmare = require('nightmare')
-var desktop, mobile, tablet
+var browsers = {}
 
-function init (cb) {
-  desktop = Nightmare({
-    width: 1200,
-    height: 600,
+function initBrowser (targetObj) {
+  var defaultparams = {
+    alwaysOnTop: false,
     show: true,
     dock: true,
-    alwaysOnTop: false,
     x: 0,
     y: 0
+  }
+  return Nightmare(Object.assign(defaultparams, targetObj))
+}
 
+function setupBrowser (browser, params) {
+  var url = 'http://localhost:8022/index-spec.html'
+  browsers[browser] = initBrowser(params)
+  return browsers[browser].goto(url).then(function () {
+    return browsers[browser]
   })
-  desktop.goto('http://localhost:8022/index-spec.html')
-  .then(function () {
-    mobile = Nightmare({
+}
+
+function init (cb) {
+  return Promise.all([
+    setupBrowser('desktop', {
+      width: 1200,
+      height: 600
+    }),
+    setupBrowser('tablet', {
       width: 360,
-      height: 640,
-      show: true,
-      dock: true,
-      alwaysOnTop: false,
-      x: 0,
-      y: 0
+      height: 640
+    }),
+    setupBrowser('mobile', {
+      width: 768,
+      height: 516
     })
-    mobile.goto('http://localhost:8022/index-spec.html')
-    .then(function () {
-      tablet = Nightmare({
-        width: 768,
-        height: 516,
-        show: true,
-        dock: true,
-        alwaysOnTop: false,
-        x: 0,
-        y: 0
-      })
-      tablet.goto('http://localhost:8022/index-spec.html')
-      .then(function () {
-        cb()
-      })
-    })
-  })
+  ])
 }
 
 function renderComponent (component, state, helperlist) {
@@ -53,9 +48,9 @@ function renderComponent (component, state, helperlist) {
     }
   }
   return Promise.all([
-    desktop.evaluate(renderOnClient, component.toString(), state, helpers),
-    mobile.evaluate(renderOnClient, component.toString(), state, helpers),
-    tablet.evaluate(renderOnClient, component.toString(), state, helpers)
+    browsers.desktop.evaluate(renderOnClient, component.toString(), state, helpers),
+    browsers.mobile.evaluate(renderOnClient, component.toString(), state, helpers),
+    browsers.tablet.evaluate(renderOnClient, component.toString(), state, helpers)
   ])
 }
 
@@ -162,11 +157,11 @@ var PageElement = {
   init (selector) {
     this.selector = selector
     this.desktop = Object.create(PageElementDimensions)
-    this.desktop.init(desktop, selector)
+    this.desktop.init(browsers.desktop, selector)
     this.mobile = Object.create(PageElementDimensions)
-    this.mobile.init(mobile, selector)
+    this.mobile.init(browsers.mobile, selector)
     this.tablet = Object.create(PageElementDimensions)
-    this.tablet.init(tablet, selector)
+    this.tablet.init(browsers.tablet, selector)
   }
 }
 
