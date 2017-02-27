@@ -1,13 +1,21 @@
 var Nightmare = require('nightmare')
 var browsers = {}
 
-function initBrowser (targetObj) {
+function initBrowser (targetObj, workerid) {
   var defaultparams = {
+    show: false,
+    dock: false
+  }
+  var browserparams = {
     alwaysOnTop: false,
     show: true,
     dock: true,
     x: 0,
     y: 0
+  }
+
+  if (workerid === 0) {
+    Object.assign(defaultparams, browserparams)
   }
   return Nightmare(Object.assign(defaultparams, targetObj))
 }
@@ -20,20 +28,20 @@ function setupBrowser (browser, params) {
   })
 }
 
-function init (cb) {
+function init (workerid) {
   return Promise.all([
     setupBrowser('desktop', {
       width: 1200,
       height: 600
-    }),
+    }, workerid),
     setupBrowser('tablet', {
       width: 360,
       height: 640
-    }),
+    }, workerid),
     setupBrowser('mobile', {
       width: 768,
       height: 516
-    })
+    }, workerid)
   ])
 }
 
