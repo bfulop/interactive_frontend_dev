@@ -15,14 +15,14 @@ function initBrowser (targetObj, workerid) {
   }
 
   if (workerid === 0) {
-    Object.assign(defaultparams, browserparams)
+    defaultparams = Object.assign(defaultparams, browserparams)
   }
   return Nightmare(Object.assign(defaultparams, targetObj))
 }
 
-function setupBrowser (browser, params) {
+function setupBrowser (browser, params, workerid) {
   var url = 'http://localhost:8022/index-spec.html'
-  browsers[browser] = initBrowser(params)
+  browsers[browser] = initBrowser(params, workerid)
   return browsers[browser].goto(url).then(function () {
     return browsers[browser]
   })
