@@ -7,6 +7,7 @@ module.exports = function (wallaby) {
 
     files: [
       {pattern: './wdio-Fakecomponent.js', load: true, instrument: false},
+      {pattern: './test-helpers.js', load: true, instrument: false},
       {pattern: './nightmarejs-wallaby.js', load: true, instrument: false},
       {pattern: './test-mocks.js', load: true, instrument: false},
       {pattern: 'src/components/*.js', load: true, instrument: false},

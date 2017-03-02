@@ -5,11 +5,6 @@ function init (wdio) {
   mobile = wdio.mobile
 }
 
-var convertMobile = function (targetWidth) {
-// 1080px in mocks is 360px in CSS
-  return targetWidth / 3
-}
-
 function distance (posA, posB) {
   return Promise.all([posA, posB]).then(function (values) {
     return values[1] - values[0]
