@@ -12,6 +12,7 @@ module.exports = function (wallaby) {
       {pattern: './test-mocks.js', load: true, instrument: false},
       {pattern: 'src/components/*.js', load: true, instrument: false},
       {pattern: './myjs.js', load: true, instrument: false},
+      {pattern: './chai-helper.js', load: true, instrument: false},
       {pattern: 'src/components/*-spec.js', ignore: true}
     ],
 
@@ -35,7 +36,10 @@ module.exports = function (wallaby) {
       var mocha = wallaby.testFramework
       wallaby.testFramework.timeout(15000)
       mocha.asyncOnly = true
-      global.expect = require('chai').expect
+      var chai = require('chai')
+      var chaihelpers = require('./chai-helper')
+      global.expect = chai.expect
+      chai.use(chaihelpers)
       var nightmare = require('./nightmarejs-wallaby')
       nightmare.init(wallaby.workerId).then(function () {
         global.renderComponent = nightmare.renderComponent

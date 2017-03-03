@@ -22,5 +22,13 @@ describe('test nightmare', function () {
   it('test getting style', () => rootelem.desktop.color.then(r => expect(r).to.equal(753)))
   it('test getting style', () => rootelem.desktop.fontsize.then(r => expect(r).to.equal(200)))
   it('test getting style', () => rootelem.desktop.visible.then(r => expect(r).to.equal(200)))
+
+  describe('test chai helper', function () {
+      var colorsubject
+      before(function () {
+        colorsubject = Promise.resolve('red')
+      })
+      it('assert color', () => colorsubject.then(r => expect(r).to.equal('blue')))
+    })
 })
 
