@@ -35,12 +35,12 @@ function init (workerid) {
       height: 600
     }, workerid),
     setupBrowser('tablet', {
-      width: 360,
-      height: 640
-    }, workerid),
-    setupBrowser('mobile', {
       width: 768,
       height: 516
+    }, workerid),
+    setupBrowser('mobile', {
+      width: 360,
+      height: 640
     }, workerid)
   ])
 }
@@ -83,7 +83,7 @@ var PageElementDimensions = {
     return this._styles
   },
   get getStyles () {
-    var targetStyles = ['color', 'font-family', 'font-size', 'font-style', 'font-weight', 'font-variant', 'line-height', 'text-decoration', 'background-color']
+    var targetStyles = ['color', 'font-family', 'font-size', 'font-style', 'font-weight', 'font-variant', 'line-height', 'text-decoration', 'background-color', 'background-image']
     return this.target.evaluate(function (selector, targetStyles) {
       var elementstyles = window.getComputedStyle(document.querySelector(selector), null)
       return targetStyles.map(function (style) {
@@ -96,6 +96,9 @@ var PageElementDimensions = {
   },
   get color () {
     return this.styles.then(r => getStyleProp(r, 'color'))
+  },
+  get backgroundimage () {
+    return this.styles.then(r => getStyleProp(r, 'background-image'))
   },
   get backgroundcolor () {
     return this.styles.then(r => getStyleProp(r, 'background-color'))
@@ -121,9 +124,26 @@ var PageElementDimensions = {
   get visible () {
     return this.target.visible(this.selector)
   },
+  get src () {
+    return this.target.evaluate(function (selector) {
+      return document.querySelector(selector).getAttribute('src')
+    }, this.selector)
+  },
   get BoundingClientRect () {
     return this.target.evaluate(function (selector) {
-      var rect = document.querySelector(selector).getBoundingClientRect()
+      var rect
+      try {
+        rect = document.querySelector(selector).getBoundingClientRect()
+      } catch (err) {
+        rect = {
+          left: err,
+          right: err,
+          top: err,
+          bottom: err,
+          width: err,
+          height: err
+        }
+      }
       return {
         left: rect.left,
         right: rect.right,
