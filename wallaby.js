@@ -37,9 +37,9 @@ module.exports = function (wallaby) {
       wallaby.testFramework.timeout(15000)
       mocha.asyncOnly = true
       var chai = require('chai')
-      var chaihelpers = require('./chai-helper')
+      var chaibrowser = require('chai-browser')
+      chai.use(chaibrowser.colormode)
       global.expect = chai.expect
-      chai.use(chaihelpers)
       var nightmare = require('./nightmarejs-wallaby')
       nightmare.init(wallaby.workerId).then(function () {
         global.renderComponent = nightmare.renderComponent

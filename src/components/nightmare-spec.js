@@ -24,11 +24,11 @@ describe('test nightmare', function () {
   it('test getting style', () => rootelem.desktop.visible.then(r => expect(r).to.equal(200)))
 
   describe('test chai helper', function () {
-      var colorsubject
-      before(function () {
-        colorsubject = Promise.resolve('red')
-      })
-      it('assert color', () => colorsubject.then(r => expect(r).to.equal('blue')))
+    var colorsubject
+    before(function () {
+      colorsubject = Promise.resolve('#BBCCDD')
     })
+    it('assert color', () => colorsubject.then(r => expect(r).to.be.color('rgb(187, 204, 221)')))
+  })
 })
 

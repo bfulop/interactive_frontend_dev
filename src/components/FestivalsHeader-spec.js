@@ -17,6 +17,14 @@ describe('Festivals Header Component Specs', function () {
     var rootelem = Object.create(PageElement)
     rootelem.init('[data-wdio="FestivalHeader"]')
 
+    describe('test chai helper', function () {
+      var colorsubject
+      before(function () {
+        colorsubject = Promise.resolve('red')
+      })
+      it('assert color', () => colorsubject.then(r => expect(r).to.equal('blue')))
+    })
+
     describe('root elem Specs', function () {
       it('use posX', () => rootelem.desktop.posX.then(r => expect(r).to.equal(0)))
       it('use left shorthand', () => rootelem.desktop.left.then(r => expect(r).to.equal(1)))
