@@ -1,23 +1,26 @@
 /* global Inferno */
+var Inferno = require('inferno')
+var createElement = require('inferno-create-element')
 
 var aphrodite = require('aphrodite')
 var css = aphrodite.css
 
 var LogoBlocks = require('./Subcomponent').component
 
-var styles = aphrodite.StyleSheet.create({
-  HeaderContent: {
-    width: 1170,
-    // border: '3px solid red',
-    padding: 25
-  }
-})
-
 function FestivalHeader (dispatch, state) {
-  return Inferno.createElement(
+  var styles = aphrodite.StyleSheet.create({
+    HeaderContent: {
+      width: 1170,
+      // border: '3px solid red',
+      padding: 25
+    }
+  })
+  return createElement(
     'div',
-    {className: css(styles.HeaderContent), 'data-wdio': 'FestivalHeader', id: 'header'},
-    Inferno.createElement('div',
+    {
+      className: css(styles.HeaderContent)
+    },
+    createElement('div',
     {'data-wdio': 'FestivalHeaderLogo'},
     'i am the logo'
     ),
@@ -26,6 +29,5 @@ function FestivalHeader (dispatch, state) {
 }
 
 module.exports = {
-  component: FestivalHeader,
-  styles: styles
+  component: FestivalHeader
 }

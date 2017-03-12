@@ -1,7 +1,9 @@
 /* global Inferno */
+var Inferno = require('inferno')
+var createElement = require('inferno-create-element')
 
 function SubComponent (dispatch, state) {
-  return Inferno.createElement(
+  return createElement(
     'div',
     null,
     'I am a subcomponent'
