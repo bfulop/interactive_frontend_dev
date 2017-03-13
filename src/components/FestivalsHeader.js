@@ -24,6 +24,7 @@ function FestivalHeader (dispatch, state) {
     {'data-wdio': 'FestivalHeaderLogo'},
     'i am the logo'
     ),
+    state.text,
     LogoBlocks()
   )
 }

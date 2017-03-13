@@ -2,3 +2,11 @@ body {
   background-color: #f1f6eb;
   font-family: sans-serif;
 }
+
+@font-face {
+  font-family: 'rockwell';
+  src: url('./fonts/rock-webfont.eot');
+  src: url('./fonts/rock-webfont.eot?#iefix') format('embedded-opentype'), url('./fonts/rock-webfont.woff') format('woff'), url('./fonts/rock-webfont.ttf') format('truetype'), url('./fonts/rock-webfont.svg#rockwellregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
