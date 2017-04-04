@@ -1,6 +1,21 @@
 var Nightmare = require('nightmare')
 var browsers = {}
 
+var browserSizes = {
+  desktop: {
+    width: 1300,
+    height: 600
+  },
+  tablet: {
+    width: 768,
+    height: 516
+  },
+  mobile: {
+    width: 360,
+    height: 640
+  }
+}
+
 function initBrowser (targetObj, workerid) {
   var defaultparams = {
     show: false,
@@ -30,18 +45,9 @@ function setupBrowser (browser, params, workerid) {
 
 function init (workerid) {
   return Promise.all([
-    setupBrowser('desktop', {
-      width: 1200,
-      height: 600
-    }, workerid),
-    setupBrowser('tablet', {
-      width: 768,
-      height: 516
-    }, workerid),
-    setupBrowser('mobile', {
-      width: 360,
-      height: 640
-    }, workerid)
+    setupBrowser('desktop', browserSizes.desktop, workerid),
+    setupBrowser('tablet', browserSizes.tablet, workerid),
+    setupBrowser('mobile', browserSizes.mobile, workerid)
   ])
 }
 
@@ -69,9 +75,30 @@ function getStyleProp (list, stylename) {
 }
 
 var PageElementDimensions = {
-  init (target, selector) {
+  init (target, selector, browsersize) {
     this.target = target
     this.selector = selector
+    this.browsersize = browserSizes[browsersize]
+  },
+  get windowSize () {
+    if (!this._windowsize) {
+      this._windowsize = Promise.resolve(this.GetWindowSize)
+    }
+    return this._windowsize
+  },
+  get GetWindowSize () {
+    return this.target.evaluate(function () {
+      return {
+        width: document.body.clientWidth,
+        height: document.body.clientHeight
+      }
+    })
+  },
+  get relative () {
+    return {
+      width: Promise.all([this.width, this.windowSize]).then(res => res[1].width / this.browsersize.width * res[0]),
+      height: Promise.all([this.height, this.windowSize]).then(res => res[1].height / this.browsersize.height * res[0])
+    }
   },
   resetStyleValues () {
     this._styles = null
@@ -83,7 +110,7 @@ var PageElementDimensions = {
     return this._styles
   },
   get getStyles () {
-    var targetStyles = ['color', 'font-family', 'font-size', 'font-style', 'font-weight', 'font-variant', 'line-height', 'text-decoration', 'background-color', 'background-image']
+    var targetStyles = ['color', 'fill', 'font-family', 'font-size', 'font-style', 'font-weight', 'font-variant', 'line-height', 'text-decoration', 'background-color', 'background-image']
     return this.target.evaluate(function (selector, targetStyles) {
       var elementstyles = window.getComputedStyle(document.querySelector(selector), null)
       return targetStyles.map(function (style) {
@@ -102,6 +129,9 @@ var PageElementDimensions = {
   },
   get backgroundcolor () {
     return this.styles.then(r => getStyleProp(r, 'background-color'))
+  },
+  get fill () {
+    return this.styles.then(r => getStyleProp(r, 'fill'))
   },
   get fontfamily () {
     return this.styles.then(r => getStyleProp(r, 'font-family'))
@@ -134,8 +164,16 @@ var PageElementDimensions = {
       var rect
       try {
         rect = document.querySelector(selector).getBoundingClientRect()
+        return {
+          left: rect.left,
+          right: rect.right,
+          top: rect.top,
+          bottom: rect.bottom,
+          width: rect.width,
+          height: rect.height
+        }
       } catch (err) {
-        rect = {
+        return {
           left: err,
           right: err,
           top: err,
@@ -143,14 +181,6 @@ var PageElementDimensions = {
           width: err,
           height: err
         }
-      }
-      return {
-        left: rect.left,
-        right: rect.right,
-        top: rect.top,
-        bottom: rect.bottom,
-        width: rect.width,
-        height: rect.height
       }
     }, this.selector)
   },
@@ -184,12 +214,15 @@ var PageElementDimensions = {
 var PageElement = {
   init (selector) {
     this.selector = selector
+
     this.desktop = Object.create(PageElementDimensions)
-    this.desktop.init(browsers.desktop, selector)
+    this.desktop.init(browsers.desktop, selector, 'desktop')
+
     this.mobile = Object.create(PageElementDimensions)
-    this.mobile.init(browsers.mobile, selector)
+    this.mobile.init(browsers.mobile, selector, 'mobile')
+
     this.tablet = Object.create(PageElementDimensions)
-    this.tablet.init(browsers.tablet, selector)
+    this.tablet.init(browsers.tablet, selector, 'tablet')
   }
 }
 
