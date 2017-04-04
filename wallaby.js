@@ -44,7 +44,10 @@ module.exports = function (wallaby) {
       nightmare.init(wallaby.workerId).then(function () {
         global.renderComponent = nightmare.renderComponent
         global.PageElement = nightmare.PageElement
+        global.TestPage = nightmare.TestPage
         wallaby.start()
+      }).catch(function (err) {
+        console.log(err)
       })
       global.wdiorunning = true
     },

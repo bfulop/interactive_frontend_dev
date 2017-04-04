@@ -226,8 +226,35 @@ var PageElement = {
   }
 }
 
+var TestPage = {
+  init (rootElem) {
+    this.rootelem = rootElem
+    this[rootElem] = Object.create(PageElement)
+    this[rootElem].init('[data-wdio="' + rootElem + '"]')
+  },
+  addElements (...list) {
+    list.forEach(function (element) {
+      var name, selector
+      if (typeof element === 'string') {
+        name = element
+        selector = '[data-wdio="' + this.rootelem + element + '"]'
+      } else {
+        name = element.name
+        selector = '[data-wdio="' + this.rootelem + '"]' + element.selector
+        if (element.parent) {
+          selector = element.parent.selector + element.selector
+        }
+      }
+      this[name] = Object.create(PageElement)
+      this[name].init(selector)
+    }, this)
+  }
+
+}
+
 module.exports = {
   init: init,
   PageElement: PageElement,
+  TestPage: TestPage,
   renderComponent: renderComponent
 }
